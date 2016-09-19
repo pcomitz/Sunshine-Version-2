@@ -6,5 +6,12 @@
     <string name="refresh" translatable="false">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="pref_location_label">Setting</string>
+
+    <!-- Lesson 3 Preferences -->
+    <string name="title_activity_settings">Location</string>
+    <string name="pref_location_key" translatable="false">location</string>
+    <string name="pref_location_default" translatable="false">29485</string>
+
 
 </resources>

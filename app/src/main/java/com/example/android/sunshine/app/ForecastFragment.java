@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -80,8 +81,11 @@ public class ForecastFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(getActivity(),mForecastAdapter.getItem(position),
                                Toast.LENGTH_SHORT).show();
+                // Sunshine Lesson 3
+                Intent detailIntent = new Intent(getActivity(),DetailActivity.class);
+                detailIntent.putExtra(Intent.EXTRA_TEXT, mForecastAdapter.getItem(position));
+                startActivity(detailIntent);
                 Log.v("PHC", "forecast is:"+mForecastAdapter.getItem(position));
-                System.out.println(mForecastAdapter.getItem(position));
             }
         });
         return rootView;
@@ -92,7 +96,6 @@ public class ForecastFragment extends Fragment {
             FetchWeatherTask weatherTask = new FetchWeatherTask();
             weatherTask.execute("29483");
         }
-
         return true;
     }
         /*
@@ -135,7 +138,6 @@ public class ForecastFragment extends Fragment {
                 // For presentation, assume the user doesn't care about tenths of a degree.
                 long roundedHigh = Math.round(high);
                 long roundedLow = Math.round(low);
-
                 String highLowStr = roundedHigh + "/" + roundedLow;
                 return highLowStr;
             }
@@ -156,7 +158,7 @@ public class ForecastFragment extends Fragment {
 
                 try {
                     // Construct the URL for the OpenWeatherMap query
-                    // Possible parameters are avaiable at OWM's forecast API page, at
+                    // Possible parameters are available at OWM's forecast API page, at
                     // http://openweathermap.org/API#forecast
                     // left in just in case its needed - no longer used TODO: remove this
                     URL url =
@@ -200,7 +202,6 @@ public class ForecastFragment extends Fragment {
                         return null;
                     }
                     forecastJsonStr = buffer.toString();
-
                     //log the weather data
                     Log.v(LOG_TAG,"Forecast string:" + forecastJsonStr);
 
@@ -226,7 +227,6 @@ public class ForecastFragment extends Fragment {
                         } catch(JSONException jse) {
                             Log.e(LOG_TAG,jse.getMessage(),jse);
                         }
-
                     }
                 }
                 //// This will only happen if there was an error getting or parsing the forecast.
@@ -287,8 +287,8 @@ public class ForecastFragment extends Fragment {
                     JSONObject dayForecast = weatherArray.getJSONObject(i);
 
                     // The date/time is returned as a long.  We need to convert that
-                    // into something human-readable, since most people won't read "1400356800" as
-                    // "this saturday".
+                    // into something human-readable, since most people won't
+                    // read "1400356800" as "this saturday".
                     long dateTime;
                     // Cheating to convert this to UTC time, which is what we want anyhow
                     dateTime = dayTime.setJulianDay(julianStartDay+i);
@@ -307,12 +307,6 @@ public class ForecastFragment extends Fragment {
                     highAndLow = formatHighLows(high, low);
                     resultStrs[i] = day + " - " + description + " - " + highAndLow;
                 }
-
-                /* for debugging
-                for (String s : resultStrs) {
-                    Log.v(LOG_TAG, "Forecast entry: " + s);
-                }
-                */
                 return resultStrs;
             }
 
