@@ -56,9 +56,6 @@ public class MainActivity extends ActionBarActivity {
             Log.v("PHC", "Settings menu");
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }

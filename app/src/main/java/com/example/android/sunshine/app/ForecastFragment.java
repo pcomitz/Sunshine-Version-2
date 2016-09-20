@@ -1,9 +1,11 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -94,7 +96,20 @@ public class ForecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_refresh) {
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("29483");
+
+            // from StackOverflow
+            // http://stackoverflow.com/questions/3624280/how-to-use-sharedpreferences-in-android-to-store-fetch-and-edit-values
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String prefLocation = pref.getString("location", "");
+
+            //udacity method
+            String loc = pref.getString(getString(R.string.pref_location_key),
+                                        getString(R.string.pref_location_default));
+            Log.v("PHC","The location is:"+prefLocation);
+            Log.v("PHC","The location is:"+loc);
+            // weatherTask.execute("29483");
+            // weatherTask.execute(prefLocation);
+            weatherTask.execute(loc);
         }
         return true;
     }
