@@ -25,11 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-//import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 // json stuff
 import org.json.JSONArray;
@@ -60,8 +59,32 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
+
+    /*
+     * Add updateWeather helper method 10/1/2016
+     */
+    private void updateWeather() {
+        FetchWeatherTask  weatherTask = new FetchWeatherTask();
+        // from StackOverflow
+        // http://stackoverflow.com/questions/3624280/how-to-use-sharedpreferences-in-android-to-store-fetch-and-edit-values
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String prefLocation = pref.getString("location", "");
+
+        //udacity approach
+        String loc = pref.getString(getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+        weatherTask.execute(loc);
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /*
         String[] forecastArray =   {"Today -Sunny - 88/63",
                                     "Tomorrow - Foggy - 78/48",
                                     "Weds - Cloudy - 72/63",
@@ -71,10 +94,16 @@ public class ForecastFragment extends Fragment {
                                     "Sun - Sunny - 88/68"};
         ArrayList<String> weekForecast =
                 new ArrayList<String>(Arrays.asList(forecastArray));
+        */
+
+        /*
+         * The ArrayAdapter will take data from a source and use ot to
+         * populate the ListView its attached to
+         */
         mForecastAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_forecast,
                 R.id.list_item_forecast_textview,
-                weekForecast);
+                new ArrayList<String>());
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
         listView.setAdapter(mForecastAdapter);
@@ -95,6 +124,8 @@ public class ForecastFragment extends Fragment {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.action_refresh) {
+
+            /*
             FetchWeatherTask weatherTask = new FetchWeatherTask();
 
             // from StackOverflow
@@ -110,8 +141,11 @@ public class ForecastFragment extends Fragment {
             // weatherTask.execute("29483");
             // weatherTask.execute(prefLocation);
             weatherTask.execute(loc);
+            */
+            updateWeather();
+            return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
     }
         /*
          * AsyncTask for getting weather
