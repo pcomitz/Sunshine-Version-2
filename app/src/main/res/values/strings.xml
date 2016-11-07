@@ -6,12 +6,30 @@
     <string name="refresh" translatable="false">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="pref_location_label">Setting</string>
+    <string name="pref_location_label">Location</string>
 
     <!-- Lesson 3 Preferences -->
     <string name="title_activity_settings">Location</string>
     <string name="pref_location_key" translatable="false">location</string>
-    <string name="pref_location_default" translatable="false">29485</string>
+    <string name="pref_location_default" translatable="false">29483</string>
 
+    <!-- 11/7 more Preferences -->
+    <!-- Label for temperature units preference [CHAR LIMIT=30] -->
+    <string name="pref_units_label">Temperature</string>
+
+    <!-- Label for metric option in temp units preference [CHAR LIMIT=25] -->
+    <string name = "pref_units_label_metric">Metric</string>
+
+    <!--Label for imperial option in temp units pref [CHAR LIMIT=25] -->
+    <string name = "pref_units_label_imperial">Imperial</string>
+
+    <!-- Key name for temperature unit preference in Shared Preferences [CHAR LIMIT=NONE] -->
+    <string name="pref_units_key" translatable="false">units</string>
+
+    <!-- Value in SharedPreferences for metric temperature unit option [CHAR LIMIT=NONE] -->
+    <string name="pref_units_metric" translatable="false">metric</string>
+
+    <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
+    <string name="pref_units_imperial" translatable="false">imperial</string>
 
 </resources>
