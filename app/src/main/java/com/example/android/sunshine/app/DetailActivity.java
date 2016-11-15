@@ -13,14 +13,9 @@ import android.view.ViewGroup;
  * https://github.com/udacity/Sunshine-Version-2/blob/3.02_create_detail_activity/app/src/main/java/com/example/android/sunshine/app/DetailActivity.java
  */
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
@@ -31,10 +26,9 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DetailFragment())
                     .commit();
         }
-
     }
 
     @Override
@@ -63,23 +57,34 @@ public class DetailActivity extends ActionBarActivity {
 
     /**
      * A placeholder fragment containing a simple view.
+     * Was PlaceHolderFragment
+     * Is this the DetailFragment? Did udacity silently change the name ?
+     * Assume that it is ....
+     * quality of udacity instruction continues to decline
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class DetailFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        //Adding Share Intent
+        private static final String LOG_TAG = "PHC_"+DetailFragment.class.getSimpleName();
+        private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
+        private String mForeCastStr;
+
+        public DetailFragment() {
+            //Adding Share Intent
+            setHasOptionsMenu(true);
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-
             //Sunshine Lesson 3
             Intent intent = getActivity().getIntent();
-            String forecastString = intent.getStringExtra(Intent.EXTRA_TEXT);
+            // WAS String forecastString = intent.getStringExtra(Intent.EXTRA_TEXT);
+            mForeCastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             if((intent != null) && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 TextView tv = (TextView) rootView.findViewById(R.id.forecast_textview);
-                tv.setText(forecastString);
+                tv.setText(mForeCastStr);
             }
             return rootView;
         }

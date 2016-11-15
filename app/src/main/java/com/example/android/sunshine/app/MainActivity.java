@@ -2,6 +2,8 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -25,6 +27,9 @@ import java.util.Arrays;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private String postCode;  //= "29483";
+    private Uri geoLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,27 @@ public class MainActivity extends ActionBarActivity {
             Log.v("PHC", "Settings menu");
             return true;
         }
+        else if(id==R.id.location_settings) {
+            showMap();
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     * show the users preferred location
+     */
+    public void showMap() {
+        //get the preferred geoLocation
+        postCode =
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString
+                ("location", "defaultStringIfNothingFound");
+        geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", postCode)
+                .build();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }
