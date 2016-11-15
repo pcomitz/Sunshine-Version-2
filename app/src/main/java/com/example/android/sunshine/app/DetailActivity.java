@@ -74,6 +74,7 @@ public class DetailActivity extends ActionBarActivity {
             setHasOptionsMenu(true);
         }
 
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
